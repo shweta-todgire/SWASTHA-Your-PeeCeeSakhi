@@ -23,16 +23,18 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-# Load MySQL credentials from environment variables
-MYSQL_USER = os.getenv('MYSQL_USER', 'root')
-MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD', '')
-MYSQL_HOST = os.getenv('MYSQL_HOST', 'localhost')
-MYSQL_DB = os.getenv('MYSQL_DB', 'swastha_db')
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
+MYSQL_HOST = os.getenv("MYSQL_HOST")
+MYSQL_PORT = os.getenv("MYSQL_PORT")
+MYSQL_DB = os.getenv("MYSQL_DB")
 
-# Database setup for MySQL
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f"mysql+pymysql://shweta:shweta123@localhost/swastha_db"
+    f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}"
+    f"@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
+    f"?ssl_ca=./certs/ca.pem"
 )
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Security Key
