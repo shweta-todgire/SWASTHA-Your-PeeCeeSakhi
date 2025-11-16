@@ -2,11 +2,13 @@ services:
   - type: web
     name: swastha-backend
     env: python
+    workingDirectory: backend/flask-api
     buildCommand: |
       pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
     startCommand: gunicorn app:app
-    workingDirectory: backend/flask-api
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: FLASK_ENV
+        value: production
